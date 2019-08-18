@@ -1,6 +1,8 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    Menu,
+    shell
 } = require("electron");
 
 // window 객체는 전역 변수로 유지. 이렇게 하지 않으면,
@@ -29,6 +31,36 @@ function createWindow() {
         // 창을 배열에 저장할 수 있습니다. 이곳은 관련 요소를 삭제하기에 좋은 장소입니다.
         win = null;
     });
+
+    var menu = Menu.buildFromTemplate([{
+            label: "Menu",
+            submenu: [{
+                    label: "Adjust Notification Value"
+                },
+                {
+                    label: "CoinMarketCap",
+                    click() {
+                        shell.openExternal('http://coinmarketcap.com')
+                    }
+                },
+                {
+                    type: 'separator'
+                },
+                {
+                    label: "Exist",
+                    click() {
+                        app.quit()
+                    }
+                },
+
+            ]
+        },
+        {
+            label: "Info"
+        }
+    ])
+
+    Menu.setApplicationMenu(menu);
 }
 
 // 이 메서드는 Electron이 초기화를 마치고
